@@ -9,6 +9,8 @@ from wireless import Wireless
 parser = argparse.ArgumentParser(description=(
     'A command line interface for passing commands to one or more GoPros.'))
 parser.add_argument(
+    'interface', help='wireless interface')
+parser.add_argument(
     'ssid', nargs='+', help='ssid of the gopro to control')
 parser.add_argument(
     'password', help='the password for the gopro(s)')
@@ -37,6 +39,8 @@ for ssid in args.ssid:
 
     # get status or send command
     if args.param == 'status':
-        print(json.dumps(camera.status(), indent=2, sort_keys=False))
+        #print(" ")
+        print(camera.status())
+        #print(json.dumps(camera.status(), indent=2, sort_keys=False))
     else:
         camera.command(args.param, args.value)
