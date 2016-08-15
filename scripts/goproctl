@@ -9,6 +9,8 @@ from wireless import Wireless
 parser = argparse.ArgumentParser(description=(
     'A command line interface for passing commands to one or more GoPros.'))
 parser.add_argument(
+    'interface', help='wireless interface')
+parser.add_argument(
     'ssid', nargs='+', help='ssid of the gopro to control')
 parser.add_argument(
     'password', help='the password for the gopro(s)')

@@ -522,7 +522,7 @@ class GoProHero:
                 # attempt to contact the camera
                 try:
                     response = urlopen(
-                        url, timeout=self.timeout).read().encode('hex')
+                        url, timeout=self.timeout).read()
                     status['raw'][cmd] = response  # save raw response
 
                     # loop through different parts we know how to translate
