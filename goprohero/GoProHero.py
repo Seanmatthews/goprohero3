@@ -113,32 +113,32 @@ class GoProHero:
         },
         'camera/se': {
             'preview': {
-                'a': 37,
-                'b': 38,
+                'a': 18,
+                'b': 19,
                 'translate': {
                     '0': 'off',
                     '1': 'on'
                 }
             },
             'batt1': {
-                'a': 38,
-                'b': 40,
+                'a': 19,
+                'b': 20,
                 'translate': '_hexToDec'
             }
         },
         'camera/sx': {  # the first 62 bytes of sx are almost the same as se
             'mode': {
-                'a': 2,
-                'b': 4,
+                'a': 1,
+                'b': 2,
                 'translate': {
-                    '00': 'video',
-                    '01': 'still',
-                    '02': 'burst',
-                    '03': 'timelapse',
-                    '07': 'settings'
+                    b'\x00': 'video',
+                    b'\x01': 'still',
+                    b'\x02': 'burst',
+                    b'\x03': 'timelapse',
+                    b'\x07': 'settings'
                 }
             },
-            'defaultmode': {
+            'defaultmode': {    #Not in API3
                 'a': 6,
                 'b': 8,
                 'translate': {
@@ -149,19 +149,19 @@ class GoProHero:
                 }
             },
             'spotmeter': {
-                'a': 8,
-                'b': 10,
+                'a': 4,
+                'b': 5,
                 'translate': {
-                    '00': 'off',
-                    '01': 'on'
+                    b'\x00': 'off',
+                    b'\x01': 'on'
                 }
             },
             'timelapseinterval': {
-                'a': 10,
-                'b': 12,
+                'a': 5,
+                'b': 6,
                 'translate': '_hexToDec'
             },
-            'autooff': {
+            'autooff': {    #not in API3
                 'a': 12,
                 'b': 14,
                 'translate': {
@@ -172,44 +172,47 @@ class GoProHero:
                 }
             },
             'fov': {
-                'a': 14,
-                'b': 16,
+                'a': 7,
+                'b': 8,
                 'translate': {
-                    '00': '170',
-                    '01': '127',
-                    '02': '90'
+                    b'\x00': '170',
+                    b'\x01': '127',
+                    b'\x02': '90'
                 }
             },
-            'picres': {
-                'a': 17,
-                'b': 18,
+            'photores': {
+                'a': 8,
+                'b': 9,
                 'translate': {
-                    '3': '5MP med',
-                    '6': '7MP med',
-                    '4': '7MP wide',
-                    '5': '12MP wide'
+                    b'\x00': '11MP wide',
+                    b'\x01': '8MP med',
+                    b'\x02': '5MP wide',
+                    b'\x03': '5MP med',
+                    b'\x04': '7MP wide',
+                    b'\x05': '12MP wide',
+                    b'\x06': '7MP med'
                 }
             },
-            'minselapsed': {
-                'a': 26,
-                'b': 28,
+            'minselapsed': {    #Not in API3
+                'a': 27,
+                'b': 29,
                 'translate': '_hexToDec'
             },
-            'secselapsed': {
+            'secselapsed': {    #Not in API3
                 'a': 28,
                 'b': 30,
                 'translate': '_hexToDec'
             },
             'orientation': {
-                'a': 37,
-                'b': 38,
-                'translate': {
+                'a': 18,
+                'b': 19,
+                'translate': {         #Bitwise
                     # looks like this really should just be the third bit
-                    '0': 'up',
-                    '4': 'down'
+                    b'\x00': 'up',
+                    b'\x04': 'down'
                 }
             },
-            'charging': {
+            'charging': {       #Not in API3
                 'a': 39,
                 'b': 40,
                 'translate': {
@@ -219,34 +222,34 @@ class GoProHero:
                 }
             },
             'picsremaining': {
-                'a': 42,
-                'b': 46,
+                'a': 21,
+                'b': 23,
                 'translate': '_hexToDec'
             },
             'npics': {
-                'a': 46,
-                'b': 50,
+                'a': 23,
+                'b': 25,
                 'translate': '_hexToDec'
             },
             'minsremaining': {
-                'a': 50,
-                'b': 54,
+                'a': 25,
+                'b': 27,
                 'translate': '_hexToDec'
             },
             'nvids': {
-                'a': 54,
-                'b': 58,
+                'a': 27,
+                'b': 29,
                 'translate': '_hexToDec'
             },
             'record': {
-                'a': 58,
-                'b': 60,
+                'a': 29,
+                'b': 30,
                 'translate': {
-                    '00': 'off',
-                    '01': 'on'
+                    b'\x00': 'off',
+                    b'\x01': 'on'
                 }
             },
-            'lowlight': {
+            'lowlight': {       #Not in API3
                 'a': 60,
                 'b': 61,
                 'translate': {
@@ -254,7 +257,7 @@ class GoProHero:
                     '4': 'on'
                 }
             },
-            'protune': {
+            'protune': {        #Bitwise stuff
                 'a': 61,
                 'b': 62,
                 'translate': {
@@ -265,34 +268,34 @@ class GoProHero:
                 }
             },
             'whitebalance': {
-                'a': 69,
-                'b': 70,
+                'a': 34,
+                'b': 35,
                 'translate': {
-                    '0': 'auto',
-                    '1': '3000K',
-                    '2': '5500K',
-                    '3': '6500K',
-                    '4': 'raw'
+                    b'\x00': 'auto',
+                    b'\x01': '3000K',
+                    b'\x02': '5500K',
+                    b'\x03': '6500K',
+                    b'\x04': 'raw'
                 }
             },
             'looping': {
-                'a': 74,
-                'b': 76,
+                'a': 37,
+                'b': 38,
                 'translate': {
-                    '00': 'off',
-                    '01': '5 minutes',
-                    '02': '20 minutes',
-                    '03': '60 minutes',
-                    '04': '120 minutes',
-                    '05': 'max'
+                    b'\x00': 'off',
+                    b'\x01': '5 minutes',
+                    b'\x02': '20 minutes',
+                    b'\x03': '60 minutes',
+                    b'\x04': '120 minutes',
+                    b'\x05': 'max'
                 }
             },
             'batt2': {
-                'a': 90,
-                'b': 92,
+                'a': 57,
+                'b': 58,
                 'translate': '_hexToDec'
             },
-            'overheated': {  # experimental
+            'overheated': {  # experimental #Not in API3
                 'a': 92,
                 'b': 93,
                 'translate': {
@@ -300,7 +303,7 @@ class GoProHero:
                     '4': 'true'
                 }
             },
-            'attachment': {
+            'attachment': { #Not in API3
                 'a': 93,
                 'b': 94,
                 'translate': {
@@ -310,37 +313,37 @@ class GoProHero:
                 }
             },
             'vidres': {
-                'a': 100,
-                'b': 102,
+                'a': 50,
+                'b': 51,
                 'translate': {
-                    '00': 'WVGA',
-                    '01': '720p',
-                    '02': '960p',
-                    '03': '1080p',
-                    '04': '1440p',
-                    '05': '2.7K',
-                    '06': '2.7K 17:9 Cinema',
-                    '07': '4K',
-                    '08': '4K 17:9 Cinema',
-                    '09': '1080p SuperView',
-                    '0a': '720p SuperView'
+                    b'\x00': 'WVGA',
+                    b'\x01': '720p',
+                    b'\x02': '960p',
+                    b'\x03': '1080p',
+                    b'\x04': '1440p',
+                    b'\x05': '2.7K',
+                    b'\x06': '2.7K 17:9 Cinema',
+                    b'\x07': '4K',
+                    b'\x08': '4K 17:9 Cinema',
+                    b'\x09': '1080p SuperView',
+                    b'\x0a': '720p SuperView'
                 }
             },
             'fps': {
-                'a': 102,
-                'b': 104,
+                'a': 51,
+                'b': 52,
                 'translate': {
-                    '00': '12',
-                    '01': '15',
-                    '02': '24',
-                    '03': '25',
-                    '04': '30',
-                    '05': '48',
-                    '06': '50',
-                    '07': '60',
-                    '08': '100',
-                    '09': '120',
-                    '0a': '240'
+                    b'\x00': '12',
+                    b'\x01': '15',
+                    b'\x02': '24',
+                    b'\x03': '25',
+                    b'\x04': '30',
+                    b'\x05': '48',
+                    b'\x06': '50',
+                    b'\x07': '60',
+                    b'\x08': '100',
+                    b'\x09': '120',
+                    b'\x0a': '240'
                 }
             }
         },
@@ -525,10 +528,12 @@ class GoProHero:
                     response = urlopen(
                         url, timeout=self.timeout).read()
                     status['raw'][cmd] = response  # save raw response
+                    print("Response:{}".format(response))
 
                     # loop through different parts we know how to translate
                     for item in self.statusMatrix[cmd]:
                         args = self.statusMatrix[cmd][item]
+                        print("Args:{}".format(args))
                         if 'a' in args and 'b' in args:
                             part = response[args['a']:args['b']]
                         else:
@@ -539,6 +544,7 @@ class GoProHero:
                                 args['translate'], part)
                         else:
                             status[item] = part
+                        print("Part: {}".format(part))
                 except (HTTPError, URLError, ConnectionError) as e:
                     logging.warning('{}{} - error opening {}: {}{}'.format(
                         Fore.YELLOW, 'GoProHero.status()', url, e, Fore.RESET))
