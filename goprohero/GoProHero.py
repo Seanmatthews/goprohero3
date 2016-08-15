@@ -35,14 +35,15 @@ class GoProHero:
 
     @classmethod
     def _hexToDec(self, val):
-        return int(val, 16)
+        returnVal = int.from_bytes(val,byteorder='big')
+        return returnVal
 
     @classmethod
     def _splitByControlCharacters(self, val):
         # extract non-control characters
         output = []
         s = ''
-        for c in unicode(val):
+        for c in val:
             if unicodedata.category(c)[0] == 'C':
                 if len(s) > 0:
                     # start a new string if we found a control character
@@ -60,7 +61,7 @@ class GoProHero:
 
     @classmethod
     def _extractModel(self, val):
-        parts = self._splitByControlCharacters(val.decode('hex'))
+        parts = self._splitByControlCharacters(val.decode('UTF-8'))
         if len(parts) > 0:
             # the first two chunks of 'HD4.02.01.02.00'
             return '.'.join(parts[0].split('.')[0:2])
@@ -69,7 +70,7 @@ class GoProHero:
 
     @classmethod
     def _extractFirmware(self, val):
-        parts = self._splitByControlCharacters(val.decode('hex'))
+        parts = self._splitByControlCharacters(val.decode('UTF-8'))
         if len(parts) > 0:
             # everything except the first two chunks of 'HD4.02.01.02.00'
             return '.'.join(parts[0].split('.')[2:])
@@ -78,7 +79,7 @@ class GoProHero:
 
     @classmethod
     def _extractName(self, val):
-        parts = self._splitByControlCharacters(val.decode('hex'))
+        parts = self._splitByControlCharacters(val.decode('UTF-8'))
         if len(parts) > 1:
             return parts[1]
         else:
@@ -524,15 +525,16 @@ class GoProHero:
                     response = urlopen(
                         url, timeout=self.timeout).read()
                     status['raw'][cmd] = response  # save raw response
+                    print("Response:{}".format(response))
 
                     # loop through different parts we know how to translate
                     for item in self.statusMatrix[cmd]:
                         args = self.statusMatrix[cmd][item]
+                        print("Args:{}".format(args))
                         if 'a' in args and 'b' in args:
                             part = response[args['a']:args['b']]
                         else:
                             part = response
-
                         # translate the response value if we know how
                         if 'translate' in args:
                             status[item] = self._translate(
@@ -617,7 +619,7 @@ class GoProHero:
                 url, timeout=self.timeout).read()
 
             if toHex:
-                response = response.encode('hex')
+                response = response.encode('UTF-8')
 
             print(response)
         except (HTTPError, URLError, socket.timeout) as e:
