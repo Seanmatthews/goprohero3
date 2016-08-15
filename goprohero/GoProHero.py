@@ -525,12 +525,10 @@ class GoProHero:
                     response = urlopen(
                         url, timeout=self.timeout).read()
                     status['raw'][cmd] = response  # save raw response
-                    print("Response:{}".format(response))
 
                     # loop through different parts we know how to translate
                     for item in self.statusMatrix[cmd]:
                         args = self.statusMatrix[cmd][item]
-                        print("Args:{}".format(args))
                         if 'a' in args and 'b' in args:
                             part = response[args['a']:args['b']]
                         else:
@@ -541,7 +539,7 @@ class GoProHero:
                                 args['translate'], part)
                         else:
                             status[item] = part
-                except (HTTPError, URLError, socket.timeout) as e:
+                except (HTTPError, URLError, ConnectionError) as e:
                     logging.warning('{}{} - error opening {}: {}{}'.format(
                         Fore.YELLOW, 'GoProHero.status()', url, e, Fore.RESET))
                     camActive = False
